@@ -6,6 +6,7 @@ import { Grid, Box } from "@mui/material/";
 import { Typography } from "@mui/material";
 import BankLogo from "../../Assets/Bank_logo.png";
 import { useNavigate } from "react-router-dom";
+import {useFetch} from "../../useFetch";
 
 
 import "./login.css";
@@ -26,6 +27,13 @@ const Login = () => {
     email: "test@test.com"
   }
 
+  //URI
+  const uri = "https://localhost:8080/";
+
+  //using custom hook
+  const {loading, data, error} = useFetch(uri);
+
+
   const [check, setCheck] = useState(false);
 
   // Authentication
@@ -45,6 +53,11 @@ const Login = () => {
     navigate("/dashboard");
   }
 
+  if (loading) return <h1>LOADING...</h1>;
+
+  if (error) return <pre>{JSON.stringify(error, null, 2)}</pre>;
+
+  
   return (
     <>
       <img
